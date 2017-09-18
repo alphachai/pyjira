@@ -100,6 +100,9 @@ class IssueSearch(JiraRequest):
     endpoint = 'search'
     _desired_objects = 'issues'
 
+    def __init__(self, auth=None, query=None):
+        params = { 'jql': query }
+        super(IssueSearch, self).__init__(auth=auth, payload=params)
 
     @property
     def response(self):
@@ -117,6 +120,17 @@ class Issue(object):
         self.title = title
         self.fields = fields
 
-    def __str__(self):
-        return '{} - {}'.format(self.key, self.title)
+    def __repr__(self):
+        return u'{} - "{}" by {}'.format(self.key, self.title, self.reporter)
 
+    @property
+    def status(self):
+        return self.fields['status']['name']
+
+    @property
+    def components(self):
+        return [c['name'] for c in self.fields['components']]
+
+    @property
+    def reporter(self):
+        return self.fields['reporter']['displayName']
