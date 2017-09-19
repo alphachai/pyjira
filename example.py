@@ -9,7 +9,6 @@ username = input('Atlassian Username: ')
 password = getpass('Password for {}: '.format(username))
 
 query = 'project = MOAT and component in ("Survey System", "Custom Databases") and status in ("Planned", "In Progress", "Code Review", "On Hold") and type not in ("Epic") ORDER BY updated DESC',
-#query = 'createdDate > -1d and project = MOAT and status in ("Incoming", "Triaged") and assignee = it-dev-maintenance-operations'
 
 request = IssueSearch(
     auth=(username, password),
